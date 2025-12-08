@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(Constants.API_URL + Constants.ADMIN_PREFIX + "/task")
+@RequestMapping(Constants.API_URL + "/task")
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;

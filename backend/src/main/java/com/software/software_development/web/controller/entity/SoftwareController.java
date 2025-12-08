@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(Constants.API_URL + Constants.ADMIN_PREFIX + "/software")
+@RequestMapping(Constants.API_URL + "/software")
 @RequiredArgsConstructor
 public class SoftwareController {
     private final SoftwareService softwareService;

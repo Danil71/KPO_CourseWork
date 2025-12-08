@@ -1,0 +1,90 @@
+package com.software.software_development.web;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+import com.software.software_development.core.error.ErrorDetails;
+import com.software.software_development.core.error.NotFoundException;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorDetails> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+        return buildResponse("INVALID_ARGUMENT", ex, request, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorDetails> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
+        return buildResponse("ILLEGAL_STATE", ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleFileNotFoundException(FileNotFoundException ex, WebRequest request) {
+        return buildResponse("FILE_NOT_FOUND", ex, request, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleNotFoundException(NotFoundException ex, WebRequest request) {
+        return buildResponse("RESOURCE_NOT_FOUND", ex, request, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ErrorDetails> handleIOException(IOException ex, WebRequest request) {
+        return buildResponse("TEMPLATE_NOT_FOUND", ex, request, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDetails> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
+        Map<String, String> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        error -> Optional.ofNullable(error.getDefaultMessage()).orElse("Invalid value"),
+                        (existing, replacement) -> existing
+                ));
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                "DTO_VALIDATION_FAILED",
+                "Validation failed for one or more fields",
+                request.getDescription(false),
+                errors
+        );
+
+        log.warn("Dto validation failed: {} — {}", request.getDescription(false), errors);
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex, WebRequest request) {
+        return buildResponse("INTERNAL_ERROR", ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ResponseEntity<ErrorDetails> buildResponse(String errorCode, Exception ex, WebRequest request, HttpStatus status) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                errorCode,
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        log.error("Exception [{}] occurred: {} — {}", errorCode, ex.getMessage(), request.getDescription(false), ex);
+
+        return new ResponseEntity<>(errorDetails, status);
+    }
+}

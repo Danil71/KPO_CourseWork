@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(Constants.API_URL + Constants.ADMIN_PREFIX + "/department")
+@RequestMapping(Constants.API_URL + "/department")
 @RequiredArgsConstructor
 public class DepartmentController {
     private final DepartmentService departmentService;
