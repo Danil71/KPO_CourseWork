@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
+import EmployeesPage from './pages/EmployeesPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import Homepage from './pages/Homepage.jsx';
 import SoftwaresPage from './pages/SoftwaresPage.jsx';
@@ -19,9 +20,13 @@ const routes = [
     path: '/admin/software',
     element: <SoftwaresPage />
   },
-    {
+  {
     path: '/admin/task',
     element: <TasksPage />
+  },
+  {
+    path: '/admin/employee',
+    element: <EmployeesPage />
   },
 ];
 
