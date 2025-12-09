@@ -7,7 +7,7 @@ const Navigation = () => {
         <header className="text-center">
              <Navbar bg="dark" data-bs-theme="dark">
                 <Container fluid>
-                    <Navbar.Brand>Компания. Расчет скорости разработки ПО</Navbar.Brand>
+                    <Navbar.Brand>Компания. Управление разработкой ПО</Navbar.Brand>
                     <Nav className="ms-auto">
                         <NavDropdown title= {'Управление'}>
 
