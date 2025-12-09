@@ -6,6 +6,7 @@ import './index.css';
 import ErrorPage from './pages/ErrorPage.jsx';
 import Homepage from './pages/Homepage.jsx';
 import SoftwaresPage from './pages/SoftwaresPage.jsx';
+import TasksPage from './pages/TasksPage.jsx';
 
 
 const routes = [
@@ -18,7 +19,10 @@ const routes = [
     path: '/admin/software',
     element: <SoftwaresPage />
   },
-  
+    {
+    path: '/admin/task',
+    element: <TasksPage />
+  },
 ];
 
 const router = createBrowserRouter([
