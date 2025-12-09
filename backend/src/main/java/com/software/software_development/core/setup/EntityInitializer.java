@@ -35,7 +35,8 @@ public class EntityInitializer {
         List<SoftwareEntity> softwares = createSoftware();
         List<DepartmentEntity> departments = createDepartments();
         List<TaskEntity> tasks = createTasks(softwares);
-
+        createEmployees(departments);
+        
         departments.get(0).addTask(tasks.get(0));
         departments.get(0).addTask(tasks.get(1));
         departments.get(0).addTask(tasks.get(5));
