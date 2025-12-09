@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
+import DepartmentsPage from './pages/DepartmentsPage.jsx';
 import EmployeesPage from './pages/EmployeesPage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import Homepage from './pages/Homepage.jsx';
@@ -27,6 +28,10 @@ const routes = [
   {
     path: '/admin/employee',
     element: <EmployeesPage />
+  },
+  {
+    path: '/admin/department',
+    element: <DepartmentsPage />
   },
 ];
 
