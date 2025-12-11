@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import { useCallback, useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import toast from 'react-hot-toast';
+import Input from '../../input/Input.jsx';
+import MultiSelect from '../../input/MultiSelect.jsx';
 import ModalConfirm from '../../modal/ModalConfirm.jsx';
 import ModalForm from '../../modal/ModalForm.jsx';
 import PaginationComponent from '../../pagination/Pagination.jsx';
 import usePagination from '../../pagination/PaginationHook.js';
 import SoftwaresForm from '../form/SoftwaresForm.jsx';
 import useSoftwaresDeleteModal from '../hooks/SoftwaresDeleteModalHook.js';
+import { useDateFilter, useNameFilter, useResetSearchParams, useTaskFilter } from '../hooks/SoftwaresFilterHook.js';
 import useSoftwaresFormModal from '../hooks/SoftwaresFormModalHook.js';
 import useSoftwares from '../hooks/SoftwaresHook.js';
 import SoftwaresTable from './SoftwaresTable.jsx';
@@ -15,7 +20,35 @@ const Softwares = () => {
 
     const {currentPage, handlePageChange} = usePagination();
 
-    const { softwares, handleSoftwaresChange, totalPages} = useSoftwares({page : currentPage});
+    const {currentNameFilter, handleNameFilterChange} = useNameFilter();
+
+    const [searchInput, setSearchInput] = useState(currentNameFilter);
+
+    const handleSearchInputChange = (event) => {
+        setSearchInput(event.target.value);
+    };
+
+    const { tasks, currentTaskFilter, handleTaskFilterChange } = useTaskFilter();
+
+    console.log(tasks);
+
+    const { currentStartDateFilter, currentEndDateFilter, handleDateFilterChange } = useDateFilter();
+
+    const [startDateInput, setStartDateInput] = useState(currentStartDateFilter);
+
+    const handleStartDateInputChange = (event) => {
+        setStartDateInput(event.target.value);
+    };
+
+    const [endDateInput, setEndDateInput] = useState(currentEndDateFilter);
+
+    const handleEndDateInputChange = (event) => {
+        setEndDateInput(event.target.value);
+    };
+
+    const resetSearchParams = useResetSearchParams();
+
+    const { softwares, handleSoftwaresChange, totalPages, clearFilters } = useSoftwares({page : currentPage, nameFilter: currentNameFilter, taskFilter: currentTaskFilter, startDateFilter: currentStartDateFilter, endDateFilter: currentEndDateFilter });
 
     const {
         isDeleteModalShow,
@@ -34,8 +67,45 @@ const Softwares = () => {
         handleFormClose,
     } = useSoftwaresFormModal(handleSoftwaresChange);
 
+    const formatDateTimeForBackend = useCallback((dateString) => {
+    if (!dateString) return null;
+    try {
+      const d = new Date(dateString);
+      if (isNaN(d.getTime())) {
+        toast.error('Произошла проблема при работе с датами');
+        return null;
+      }
+      return d.toISOString();
+    } catch (error) {
+      toast.error(`Ошибка при работе с датам: ${error.message}`);
+      return null;
+    }
+  }, []);
+
+
     return (
         <>
+            <div className='d-flex'>
+                <Form.Control type="text" name='name' value={searchInput} onChange={handleSearchInputChange} placeholder="Поиск" />
+                <Button variant='primary' className='m-0 ms-2' onClick={() => handleNameFilterChange(searchInput)}>Найти</Button>
+            </div>
+            <MultiSelect className='mt-2' options={tasks} label='Фильтр по задачам'
+                     onChange={handleTaskFilterChange} />
+            <div className='d-flex flex-column col-4'>
+                <div className='d-flex justify-content-between'>
+                    <Input name='startDateFilter' label='С' value={startDateInput} onChange={handleStartDateInputChange}
+                                    type='datetime-local' required />
+                    <Input name='endDateFilter' label='До' value={endDateInput} onChange={handleEndDateInputChange}
+                                    type='datetime-local' required />
+                </div>
+                <Button variant='primary' className='m-0' onClick={() => handleDateFilterChange(formatDateTimeForBackend(startDateInput), formatDateTimeForBackend(endDateInput))}>Применить</Button>
+            </div>
+            <div className='d-flex justify-content-end'>
+                <Button variant='danger' className='my-2' onClick={() => {
+                        clearFilters();
+                        setSearchInput('');
+                        resetSearchParams();}}>Очистить фильтры</Button>
+            </div>
             <SoftwaresTable>
                 {
                     softwares.map((software, index) =>
@@ -52,7 +122,7 @@ const Softwares = () => {
                 </Button>
             </div>
             <PaginationComponent totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
-
+            
             <ModalConfirm show={isDeleteModalShow}
                 onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel}
                 title='Удаление' message='Удалить элемент?' />
