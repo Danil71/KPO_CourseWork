@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import toast from 'react-hot-toast';
+import DownloadButton from '../../input/DownloadButton.jsx';
 import Input from '../../input/Input.jsx';
 import MultiSelect from '../../input/MultiSelect.jsx';
 import ModalConfirm from '../../modal/ModalConfirm.jsx';
@@ -82,7 +83,7 @@ const Softwares = () => {
     }
   }, []);
 
-
+    const SOFTWARE_REPORT_URL = 'http://127.0.0.1:8080/api/v1/reports';
     return (
         <>
             <div className='d-flex'>
@@ -122,6 +123,13 @@ const Softwares = () => {
                 </Button>
             </div>
             <PaginationComponent totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
+
+            <DownloadButton
+                url={SOFTWARE_REPORT_URL}
+                fileName="software_report.xlsx"
+                buttonText="Скачать отчет ПО"
+                variant="success"
+            />
             
             <ModalConfirm show={isDeleteModalShow}
                 onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel}
