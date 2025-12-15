@@ -53,9 +53,9 @@ public class SoftwareController {
             @RequestParam(name = "endDateTo", required = false) String endDateToStr,
             @RequestParam(name = "taskIds", required = false) List<Long> taskIds,
             @RequestParam(name = "searchInfo", required = false) String searchInfo,
-            @RequestParam(name = "sortType", defaultValue = "NAME_DESC") SoftwareSortType sortType, // Default sort by start date
+            @RequestParam(name = "sortType", defaultValue = "NAME_DESC") SoftwareSortType sortType,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "5") int size) { // Using a direct value if Constants.DEFAULT_PAGE_SIZE isn't available
+            @RequestParam(name = "size", defaultValue = "5") int size) { 
 
         Date startDateFrom = startDateFromStr != null ? Formatter.parse(startDateFromStr) : null;
         Date startDateTo = startDateToStr != null ? Formatter.parse(startDateToStr) : null;

@@ -22,14 +22,14 @@ public class SoftwareReportController{
 
     private final SoftwareReportService softwareReportService;
 
-    @GetMapping // Новый endpoint для детального отчета
+    @GetMapping
     public ResponseEntity<byte[]> exportDetailedSoftwareExcelReport() throws IOException{
 
         byte[] excelBytes = softwareReportService.generateDetailedSoftwareExcelReport();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
-        headers.setContentDispositionFormData("attachment", "software_report.xlsx"); // Новое имя файла
+        headers.setContentDispositionFormData("attachment", "software_report.xlsx");
         headers.setContentLength(excelBytes.length);
 
         return new ResponseEntity<>(excelBytes, headers, HttpStatus.OK);

@@ -23,8 +23,6 @@ public class Constants {
 
     public static final String LOG_PATH = "logs";
 
-    public static final String BOT_SERVICE_URL = "";
-
     private Constants() {
     }
 }

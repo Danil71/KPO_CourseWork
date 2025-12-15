@@ -58,7 +58,6 @@ public class SoftwareReportService {
         }
     }
 
-    // Метод маппинга SoftwareEntity -> SoftwareTaskDepartmentReportDto
     private SoftwareTaskDepartmentReportDto mapToSoftwareTaskDepartmentReportDto(SoftwareEntity software) {
         List<TaskReportDetailsDto> taskDetails = new ArrayList<>();
         if (software.getTasks() != null && !software.getTasks().isEmpty()) {
@@ -77,9 +76,8 @@ public class SoftwareReportService {
         );
     }
 
-    // Метод маппинга TaskEntity -> TaskReportDetailsDto
     private TaskReportDetailsDto mapToTaskReportDetailsDto(TaskEntity task) {
-        // Собираем имена департаментов
+
         Set<String> departmentNames = null;
         Set<Integer> departmentEfficiency = null;
 
@@ -89,7 +87,7 @@ public class SoftwareReportService {
                     .collect(Collectors.toSet());
             departmentEfficiency = task.getDepartments().stream()
                     .map(DepartmentEntity::getEfficiency)
-                    .collect(Collectors.toSet()); // Можно также суммировать или усреднять
+                    .collect(Collectors.toSet());
         }
 
         return new TaskReportDetailsDto(

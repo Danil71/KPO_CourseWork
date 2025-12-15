@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EntityInitializer {
 
-    // Сервисы для каждой сущности
     private final SoftwareService softwareService;
     private final DepartmentService departmentService;
     private final EmployeeService employeeService;
@@ -37,25 +36,21 @@ public class EntityInitializer {
     @Loggable
     @Transactional
     public void initializeAll() {
-        // Создание основных сущностей
         List<SoftwareEntity> softwares = createSoftware();
         List<DepartmentEntity> departments = createDepartments();
         List<EmployeeEntity> employees = createEmployees(departments);
         List<TaskEntity> tasks = createTasks(softwares);
 
-        // Установление связей многие-ко-многим
-        // Присвоение задач отделам
-        departments.get(0).addTask(tasks.get(0)); // Отдел разработки -> Implement new feature X
-        departments.get(0).addTask(tasks.get(1)); // Отдел разработки -> Fix bug in module Y
-        departments.get(0).addTask(tasks.get(5)); // Отдел разработки -> Optimize database queries
+        departments.get(0).addTask(tasks.get(0));
+        departments.get(0).addTask(tasks.get(1));
+        departments.get(0).addTask(tasks.get(5));
 
-        departments.get(1).addTask(tasks.get(2)); // Отдел маркетинга -> Develop marketing campaign Z
+        departments.get(1).addTask(tasks.get(2));
 
-        departments.get(2).addTask(tasks.get(3)); // Финансовый отдел -> Prepare quarterly financial report
+        departments.get(2).addTask(tasks.get(3));
 
-        departments.get(3).addTask(tasks.get(4)); // Отдел кадров -> Onboard new employees
+        departments.get(3).addTask(tasks.get(4));
 
-        // Создание пользователей
         createUsers(employees);
     }
 
@@ -85,12 +80,12 @@ public class EntityInitializer {
     @Loggable
     private List<EmployeeEntity> createEmployees(List<DepartmentEntity> departments) {
         List<EmployeeEntity> employees = new ArrayList<>();
-        employees.add(employeeService.create(new EmployeeEntity("Иванов", departments.get(0)))); // Разработка
-        employees.add(employeeService.create(new EmployeeEntity("Петрова", departments.get(1)))); // Маркетинг
-        employees.add(employeeService.create(new EmployeeEntity("Путинцев", departments.get(0)))); // Разработка
-        employees.add(employeeService.create(new EmployeeEntity("Козлова", departments.get(3)))); // HR
-        employees.add(employeeService.create(new EmployeeEntity("Смирнов", departments.get(2)))); // Финансы
-        employees.add(employeeService.create(new EmployeeEntity("Федорова", departments.get(4)))); // Поддержка клиентов
+        employees.add(employeeService.create(new EmployeeEntity("Иванов", departments.get(0))));
+        employees.add(employeeService.create(new EmployeeEntity("Петрова", departments.get(1))));
+        employees.add(employeeService.create(new EmployeeEntity("Путинцев", departments.get(0))));
+        employees.add(employeeService.create(new EmployeeEntity("Козлова", departments.get(3))));
+        employees.add(employeeService.create(new EmployeeEntity("Смирнов", departments.get(2))));
+        employees.add(employeeService.create(new EmployeeEntity("Федорова", departments.get(4))));
         return employees;
     }
 
@@ -108,10 +103,7 @@ public class EntityInitializer {
 
     @Loggable
     private void createUsers(List<EmployeeEntity> employees) {
-        // Первый пользователь (разработчик)
         userService.create(new UserEntity("developer@example.com", "DsD#Ys9dS_cQ", "+79876349406", UserRole.DEVELOPER, employees.get(0)));
-
-        // Второй пользователь (менеджер)
         userService.create(new UserEntity("daniilputincev91@gmail.com", "DsD#Ys9dS_cQ", "+79876349406", UserRole.MANAGER, employees.get(2)));
     }
 }
