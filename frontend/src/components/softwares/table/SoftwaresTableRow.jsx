@@ -11,14 +11,14 @@ const SoftwaresTableRow = ({
     };
 
     return (
-        <tr>
+        <tr data-testid={`row-${software.name}`}>
             <th scope="row">{index + 1}</th>
             <td>{software.name}</td>
             <td>{software.description}</td>
             <td>{formatDateTime(software.startDate)}</td>
             <td>{formatDateTime(software.endDate)}</td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onEdit)}><PencilFill /></a></td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onDelete)}><Trash3 /></a></td>
+            <td><a href="#" onClick={(event) => handleAnchorClick(event, onEdit)} data-testid="edit-btn"><PencilFill /></a></td>
+            <td><a href="#" onClick={(event) => handleAnchorClick(event, onDelete)} data-testid="delete-btn"><Trash3 /></a></td>
         </tr>
     );
 };

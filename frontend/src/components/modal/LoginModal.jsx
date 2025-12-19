@@ -55,6 +55,7 @@ const LoginModal = observer(({ show }) => {
               onChange={handleChange}
               required
               className="rounded-3"
+              data-testid="login-email"
             />
             <Form.Control.Feedback type="invalid">
               Электронная почта должна быть введена в корректном формате
@@ -74,6 +75,7 @@ const LoginModal = observer(({ show }) => {
               isInvalid={
                 validated && !PASSWORD_PATTERN.test(formData.password)
               }
+              data-testid="login-password"
             />
             <Form.Control.Feedback type="invalid">
               {PASSWORD_MESSAGE}
@@ -81,7 +83,13 @@ const LoginModal = observer(({ show }) => {
           </Form.Group>
 
           <div className="d-grid">
-            <Button variant="dark" size="lg" type="submit" className="rounded-3">
+            <Button 
+              variant="dark" 
+              size="lg" 
+              type="submit" 
+              className="rounded-3"
+              data-testid="login-submit"
+            >
               Войти в систему
             </Button>
           </div>

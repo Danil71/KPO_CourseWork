@@ -10,13 +10,21 @@ const DepartmentsTableRow = ({
     };
 
     return (
-        <tr>
-            <th scope="row">{index + 1}</th>
+        <tr data-testid={`row-${department.name}`}>
+            <th scope="row">{index}</th>
             <td>{department.name}</td>
             <td>{department.efficiency}</td>
             <td>{department.specialty}</td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onEdit)}><PencilFill /></a></td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onDelete)}><Trash3 /></a></td>
+            <td>
+                <a href="#" onClick={(event) => handleAnchorClick(event, onEdit)} data-testid="edit-btn">
+                    <PencilFill />
+                </a>
+            </td>
+            <td>
+                <a href="#" onClick={(event) => handleAnchorClick(event, onDelete)} data-testid="delete-btn">
+                    <Trash3 />
+                </a>
+            </td>
         </tr>
     );
 };

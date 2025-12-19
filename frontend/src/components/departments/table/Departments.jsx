@@ -46,16 +46,28 @@ const Departments = () => {
                 }
             </DepartmentsTable>
             <div className="d-flex justify-content-center">
-                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()}>
+                <Button 
+                    variant='primary' 
+                    className="fw-bold px-5 mb-5" 
+                    onClick={() => showFormModal()}
+                    data-testid="dept-create-btn"
+                >
                     Добавить отдел
                 </Button>
             </div>
+            
             <ModalConfirm show={isDeleteModalShow}
                 onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel}
                 title='Удаление' message='Удалить элемент?' />
-            <ModalForm show={isFormModalShow} validated={isFormValidated}
-                onSubmit={handleFormSubmit} onClose={handleFormClose}
-                title='Редактирование'>
+            
+            <ModalForm 
+                show={isFormModalShow} 
+                validated={isFormValidated}
+                onSubmit={handleFormSubmit} 
+                onClose={handleFormClose}
+                title='Редактирование'
+                saveBtnTestId="dept-save-btn"
+            >
                 <DepartmentsForm
                     department={currentDepartment}
                     handleChange={handleDepartmentChange}

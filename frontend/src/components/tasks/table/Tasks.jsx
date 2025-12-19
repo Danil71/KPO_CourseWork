@@ -46,7 +46,7 @@ const Tasks = () => {
                 }
             </TasksTable>
             <div className="d-flex justify-content-center">
-                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()}>
+                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()} data-testid="task-create-btn">
                     Добавить задачу
                 </Button>
             </div>
@@ -56,7 +56,7 @@ const Tasks = () => {
                 title='Удаление' message='Удалить элемент?' />
             <ModalForm show={isFormModalShow} validated={isFormValidated}
                 onSubmit={handleFormSubmit} onClose={handleFormClose}
-                title='Редактирование'>
+                title='Редактирование' saveBtnTestId="task-save-btn">
                 <TasksForm task={currentTask} handleChange={handleTaskChange} />
             </ModalForm>
         </>

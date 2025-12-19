@@ -87,25 +87,25 @@ const Softwares = () => {
     return (
         <>
             <div className='d-flex'>
-                <Form.Control type="text" name='name' value={searchInput} onChange={handleSearchInputChange} placeholder="Поиск" />
-                <Button variant='primary' className='m-0 ms-2' onClick={() => handleNameFilterChange(searchInput)}>Найти</Button>
+                <Form.Control type="text" name='name' value={searchInput} onChange={handleSearchInputChange} placeholder="Поиск" data-testid="soft-search-input"/>
+                <Button variant='primary' className='m-0 ms-2' onClick={() => handleNameFilterChange(searchInput)} data-testid="soft-search-btn">Найти</Button>
             </div>
             <MultiSelect className='mt-2' options={tasks} label='Фильтр по задачам'
                      onChange={handleTaskFilterChange} />
             <div className='d-flex flex-column col-4'>
                 <div className='d-flex justify-content-between'>
                     <Input name='startDateFilter' label='С' value={startDateInput} onChange={handleStartDateInputChange}
-                                    type='datetime-local' required />
+                                    type='datetime-local' required data-testid="filter-date-start"/>
                     <Input name='endDateFilter' label='До' value={endDateInput} onChange={handleEndDateInputChange}
-                                    type='datetime-local' required />
+                                    type='datetime-local' required data-testid="filter-date-end"/>
                 </div>
-                <Button variant='primary' className='m-0' onClick={() => handleDateFilterChange(formatDateTimeForBackend(startDateInput), formatDateTimeForBackend(endDateInput))}>Применить</Button>
+                <Button variant='primary' className='m-0' onClick={() => handleDateFilterChange(formatDateTimeForBackend(startDateInput), formatDateTimeForBackend(endDateInput))} data-testid="filter-apply-btn">Применить</Button>
             </div>
             <div className='d-flex justify-content-end'>
                 <Button variant='danger' className='my-2' onClick={() => {
                         clearFilters();
                         setSearchInput('');
-                        resetSearchParams();}}>Очистить фильтры</Button>
+                        resetSearchParams();}} data-testid="filter-clear-btn">Очистить фильтры</Button>
             </div>
             <SoftwaresTable>
                 {
@@ -118,7 +118,7 @@ const Softwares = () => {
                 }
             </SoftwaresTable>
             <div className="d-flex justify-content-center">
-                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()}>
+                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()} data-testid="soft-create-btn">
                     Добавить ПО
                 </Button>
             </div>
@@ -129,6 +129,7 @@ const Softwares = () => {
                 fileName="software_report.xlsx"
                 buttonText="Скачать отчет ПО"
                 variant="success"
+                data-testid="soft-download-wrapper"
             />
             
             <ModalConfirm show={isDeleteModalShow}
@@ -136,7 +137,7 @@ const Softwares = () => {
                 title='Удаление' message='Удалить элемент?' />
             <ModalForm show={isFormModalShow} validated={isFormValidated}
                 onSubmit={handleFormSubmit} onClose={handleFormClose}
-                title='Редактирование'>
+                title='Редактирование' saveBtnTestId="soft-save-btn">
                 <SoftwaresForm software={currentSoftware} handleChange={handleSoftwareChange} />
             </ModalForm>
         </>

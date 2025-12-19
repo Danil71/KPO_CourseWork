@@ -29,9 +29,10 @@ const TasksForm = ({ task, handleChange }) => {
                 onChange={handleChange}
                 type='textarea'
                 required
+                data-testid="task-desc"
             />
             <Input name='difficulty' label='Сложность' value={task.difficulty} onChange={handleChange}
-                type='number' required />
+                type='number' required data-testid="task-diff"/>
             <Input
                 name='startDate'
                 label='Дата начала'
@@ -42,6 +43,7 @@ const TasksForm = ({ task, handleChange }) => {
                 }}
                 type='datetime-local'
                 required
+                data-testid="task-start"
             />
             <Input
                 name='endDate'
@@ -54,12 +56,13 @@ const TasksForm = ({ task, handleChange }) => {
                 type='datetime-local'
                 isInvalid={isEndDateInvalid}
                 required
+                data-testid="task-end"
             />
             <Input name='hours' label='Часы' value={task.hours} onChange={handleChange}
-                type='number' required />
+                type='number' required data-testid="task-hours"/>
 
             <Select values={softwares} name='softwareId' label='ПО' value={task.softwareId} onChange={handleChange}
-                required />
+                required data-testid="task-soft-select"/>
         </>
     );
 };

@@ -11,7 +11,7 @@ const TasksTableRow = ({
     };
 
     return (
-        <tr>
+        <tr data-testid={`row-${task.description}`}> 
             <th scope="row">{index + 1}</th>
             <td>{task.description}</td>
             <td>{task.difficulty}</td>
@@ -19,8 +19,8 @@ const TasksTableRow = ({
             <td>{formatDateTime(task.endDate)}</td>
             <td>{task.hours}</td>
             <td>{task.softwareName}</td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onEdit)}><PencilFill /></a></td>
-            <td><a href="#" onClick={(event) => handleAnchorClick(event, onDelete)}><Trash3 /></a></td>
+            <td><a href="#" onClick={(event) => handleAnchorClick(event, onEdit)} data-testid="edit-btn"><PencilFill /></a></td>
+            <td><a href="#" onClick={(event) => handleAnchorClick(event, onDelete)} data-testid="delete-btn"><Trash3 /></a></td>
         </tr>
     );
 };

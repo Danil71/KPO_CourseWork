@@ -33,6 +33,7 @@ const Employees = () => {
         handleFormSubmit,
         handleFormClose,
     } = useEmployeesFormModal(handleEmployeesChange);
+
     return (
         <>
             <EmployeesTable>
@@ -46,18 +47,34 @@ const Employees = () => {
                 }
             </EmployeesTable>
             <div className="d-flex justify-content-center">
-                <Button variant='primary' className="fw-bold px-5 mb-5" onClick={() => showFormModal()}>
-                    Добавить ПО
+                <Button 
+                    variant='primary' 
+                    className="fw-bold px-5 mb-5" 
+                    onClick={() => showFormModal()}
+                    data-testid="emp-create-btn"
+                >
+                    Добавить сотрудника
                 </Button>
             </div>
+            
             <PaginationComponent totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />
+            
             <ModalConfirm show={isDeleteModalShow}
                 onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel}
-                title='Удаление' message='Удалить элемент?' />
-            <ModalForm show={isFormModalShow} validated={isFormValidated}
-                onSubmit={handleFormSubmit} onClose={handleFormClose}
-                title='Редактирование'>
-                <EmployeesForm employee={currentEmployee} handleChange={handleEmployeeChange} />
+                title='Увольнение' message='Удалить сотрудника?' />
+            
+            <ModalForm 
+                show={isFormModalShow} 
+                validated={isFormValidated}
+                onSubmit={handleFormSubmit} 
+                onClose={handleFormClose}
+                title='Редактирование'
+                saveBtnTestId="emp-save-btn"
+            >
+                <EmployeesForm 
+                    employee={currentEmployee} 
+                    handleChange={handleEmployeeChange} 
+                />
             </ModalForm>
         </>
     );

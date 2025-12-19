@@ -4,7 +4,8 @@ import { createPortal } from 'react-dom';
 import './Modal.css';
 
 const ModalForm = ({
-    show, title, validated, onSubmit, onClose, children,
+    show, title, validated, onSubmit, onClose, children, 
+    saveBtnTestId
 }) => {
     return createPortal(
         <Modal show={show} backdrop='static' onHide={() => onClose()}>
@@ -21,7 +22,12 @@ const ModalForm = ({
                         onClick={() => onClose()}>
                         Отмена
                     </Button>
-                    <Button variant='primary' className='col-5 m-0 ms-2' type='submit'>
+                    <Button 
+                        variant='primary' 
+                        className='col-5 m-0 ms-2' 
+                        type='submit'
+                        data-testid={saveBtnTestId || 'modal-save-btn'}
+                    >
                         Сохранить
                     </Button>
                 </Modal.Footer>
@@ -38,6 +44,7 @@ ModalForm.propTypes = {
     onSubmit: PropTypes.func,
     onClose: PropTypes.func,
     children: PropTypes.node,
+    saveBtnTestId: PropTypes.string,
 };
 
 export default ModalForm;

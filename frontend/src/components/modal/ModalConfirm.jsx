@@ -22,7 +22,7 @@ const ModalConfirm = ({
                     Нет
                 </Button>
                 <Button variant='primary' className='col-5 m-0 ms-2'
-                    onClick={() => onConfirm()}>
+                    onClick={() => onConfirm()} data-testid="confirm-delete-btn">
                     Да
                 </Button>
             </Modal.Footer>

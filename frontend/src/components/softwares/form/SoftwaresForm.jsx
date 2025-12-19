@@ -19,7 +19,7 @@ const SoftwaresForm = ({ software, handleChange }) => {
     return (
         <>
             <Input name='name' label='Название' value={software.name} onChange={handleChange}
-                type='text' required />
+                type='text' required data-testid="soft-name"/>
             <TextArea
                 name='description'
                 label='Описание'
@@ -27,6 +27,7 @@ const SoftwaresForm = ({ software, handleChange }) => {
                 onChange={handleChange}
                 type='textarea'
                 required
+                data-testid="soft-desc"
             />
             <Input
                 name='startDate'
@@ -38,6 +39,7 @@ const SoftwaresForm = ({ software, handleChange }) => {
                 }}
                 type='datetime-local'
                 required
+                data-testid="soft-form-start"
             />
             <Input
                 name='endDate'
@@ -50,6 +52,7 @@ const SoftwaresForm = ({ software, handleChange }) => {
                 type='datetime-local'
                 isInvalid={isEndDateInvalid}
                 required
+                data-testid="soft-form-end"
             />
         </>
     );
