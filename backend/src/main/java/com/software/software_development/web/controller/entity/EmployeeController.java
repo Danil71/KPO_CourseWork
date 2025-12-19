@@ -34,14 +34,23 @@ public class EmployeeController {
 
     public EmployeeDto toDto(EmployeeEntity entity) {
         EmployeeDto dto = modelMapper.map(entity, EmployeeDto.class);
-        dto.setDepartmentId(entity.getDepartment().getId());
-        dto.setDepartmentName(entity.getDepartment().getName());
+        if (entity.getDepartment() != null) {
+            dto.setDepartmentId(entity.getDepartment().getId());
+            dto.setDepartmentName(entity.getDepartment().getName());
+        } else {
+            dto.setDepartmentId(null);
+            dto.setDepartmentName(null);
+        }
         return dto;
     }
 
     public EmployeeEntity toEntity(EmployeeDto dto) {
         EmployeeEntity entity = modelMapper.map(dto, EmployeeEntity.class);
-        entity.setDepartment(departmentService.get(dto.getDepartmentId()));
+        if (dto.getDepartmentId() != null) {
+            entity.setDepartment(departmentService.get(dto.getDepartmentId()));
+        } else {
+            entity.setDepartment(null);
+        }
         return entity;
     }
 

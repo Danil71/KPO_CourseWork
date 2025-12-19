@@ -29,8 +29,7 @@ public class EmployeeDto {
     @NotNull
     private double speed;
 
-    @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Department ID must be at least 1")
     private Long departmentId;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
